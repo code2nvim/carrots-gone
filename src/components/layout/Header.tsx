@@ -1,7 +1,9 @@
+import { MenuButton } from "./Menu";
+
 export function Header() {
   return (
     <header>
-      <>header</>
+      <MenuButton />
     </header>
   );
 }
