@@ -1,6 +1,6 @@
 import { Layout } from "./components/layout/Layout";
-import { MenuProvider } from "./components/layout/Menu";
-import { Home } from "./Home";
+import { MenuProvider } from "./contexts/Menu";
+import { Home } from "./pages/Home";
 
 export default function App() {
   return (

@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { Menu } from "./Menu";
+import { Menu } from "../../contexts/Menu";
 
 interface LayoutProps {
   children: ReactElement;
