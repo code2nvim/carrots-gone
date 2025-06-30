@@ -1,13 +1,15 @@
 import { Layout } from "./components/layout/Layout";
 import { MenuProvider } from "./contexts/Menu";
-import { Home } from "./pages/Home";
+import { CurrentPage, PageProvider } from "./contexts/Page";
 
 export default function App() {
   return (
     <MenuProvider>
-      <Layout>
-        <Home />
-      </Layout>
+      <PageProvider>
+        <Layout>
+          <CurrentPage />
+        </Layout>
+      </PageProvider>
     </MenuProvider>
   );
 }

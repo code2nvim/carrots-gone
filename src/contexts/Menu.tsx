@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, type ReactElement } from "react";
+import { SelectPage } from "./Page";
 
 function toggle() {
-  throw Error("Menu: not been assigned!");
+  throw Error("toggle(): not been assigned!");
 }
 
 const MenuContext = createContext({ toggle: toggle });
@@ -28,7 +29,7 @@ export function Menu() {
           className="absolute flex min-h-screen w-full flex-col items-center bg-black opacity-70"
         >
           <nav className="top-[30%] text-white">
-            <>nav</>
+            <SelectPage />
           </nav>
         </div>
       )}
