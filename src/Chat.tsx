@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Chat() {
   return (
     <main className="grow bg-green-500">
-      <p>Home</p>
+      <p>Chat</p>
     </main>
   );
 }
