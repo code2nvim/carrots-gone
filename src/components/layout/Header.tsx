@@ -2,7 +2,7 @@ import { MenuButton } from "../../contexts/Menu";
 
 export function Header() {
   return (
-    <header>
+    <header className="hidden">
       <MenuButton />
     </header>
   );

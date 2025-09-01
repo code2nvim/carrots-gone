@@ -26,7 +26,9 @@ export function SelectPage() {
     <nav className="flex flex-col">
       <button onClick={() => page.goto("Home")}>Home</button>
       <button onClick={() => page.goto("Chat")}>Chat</button>
-      <button onClick={() => page.goto("Game")}>Game</button>
+      {
+        //<button onClick={() => page.goto("Game")}>Game</button>
+      }
     </nav>
   );
 }

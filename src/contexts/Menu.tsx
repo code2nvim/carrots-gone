@@ -17,6 +17,7 @@ export function MenuProvider({ children }: MenuProviderProps) {
 
 export function Menu() {
   const menu = useContext(MenuContext);
+
   const [show, setShow] = useState(false);
 
   menu.toggle = () => setShow((show) => !show);
