@@ -1,8 +1,19 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useGetUsername } from "../../hooks/chat";
 
-export function InputBox() {
+interface InputBoxProps {
+  select: React.RefObject<(room: string) => void>;
+}
+
+export function InputBox({ select }: InputBoxProps) {
+  const user = useGetUsername();
+  const [room, setRoom] = useState("default channel");
+  const [content, setContent] = useState("");
+  const [sending, setSending] = useState(false);
+
+  select.current = (room: string) => setRoom(room);
+
   const ref = useRef<HTMLTextAreaElement>(null);
-
   const handleInput = () => {
     const box = ref.current;
     if (box) {
@@ -11,14 +22,33 @@ export function InputBox() {
     }
   };
 
+  const handleSend = () => {
+    setSending(true);
+    fetch("/api/message", {
+      method: "POST",
+      body: JSON.stringify({ user: user, room: room, content: content }),
+      credentials: "same-origin",
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+    setSending(false);
+  };
+
   return (
     <section className="flex gap-2">
       <textarea
         ref={ref}
         onInput={handleInput}
+        onChange={(e) => setContent(e.target.value)}
         className="h-auto grow resize-none rounded-md border border-slate-500 bg-slate-800 p-1"
       />
-      <button className="aspect-square p-1">📤</button>
+      <button
+        disabled={sending}
+        onClick={handleSend}
+        className="aspect-square p-1"
+      >
+        📤
+      </button>
     </section>
   );
 }

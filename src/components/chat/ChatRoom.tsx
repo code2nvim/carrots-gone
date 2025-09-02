@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetMessageList } from "../../hooks/chat";
+import { useGetMessageList, useGetUsername } from "../../hooks/chat";
 
 interface ChatRoomProps {
   select: React.RefObject<(room: string) => void>;
@@ -9,6 +9,8 @@ export function ChatRoom(props: ChatRoomProps) {
   const [room, setRoom] = useState("default channel");
 
   const messages = useGetMessageList(room);
+
+  const username = useGetUsername();
 
   props.select.current = (room: string) => setRoom(room);
 
@@ -21,9 +23,14 @@ export function ChatRoom(props: ChatRoomProps) {
       )}
       <ul className="size-full gap-4 rounded-md bg-slate-800 p-4">
         {messages.map((message, idx) => (
-          <li key={message.id}>
+          <li
+            key={message.id}
+            className={`${message.user == username && "flex justify-end"}`}
+          >
             {(idx == 0 || messages[idx - 1].user != message.user) && (
-              <label className="p-1"> {message.user}:</label>
+              <label className="p-1">
+                {message.user != username && message.user + ": "}
+              </label>
             )}
             <p className="my-1 w-min rounded-md bg-blue-900 p-2">
               {message.content}

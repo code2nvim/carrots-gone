@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export function Account() {
   const [create, setCreate] = useState(false);
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -37,15 +38,17 @@ function AccountForm({ api, text }: AccountFromProps) {
   const [sending, setSending] = useState(false);
 
   const handleSubmit = () => {
-    setSending(true);
-    fetch(api, {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      credentials: "same-origin",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-    setSending(false);
+    if (username && password) {
+      setSending(true);
+      fetch(api, {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        credentials: "same-origin",
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+      setSending(false);
+    }
   };
 
   return (

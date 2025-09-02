@@ -12,6 +12,18 @@ export interface Message {
   content: string;
 }
 
+export function useGetUsername(): string {
+  const [data, setData] = useState({ username: "" });
+
+  useEffect(() => {
+    fetch("/api/username")
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
+
+  return data.username;
+}
+
 export function useGetRoomList(): Room[] {
   const [rooms, setRooms] = useState([] as Room[]);
 
