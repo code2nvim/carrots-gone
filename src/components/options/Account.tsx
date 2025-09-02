@@ -1,25 +1,55 @@
 import { useState } from "react";
 
 export function Account() {
+  const [create, setCreate] = useState(false);
+  return (
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="flex flex-col items-end"
+    >
+      {create ? <Create /> : <Login />}
+      <button
+        onClick={() => setCreate((create) => !create)}
+        className="m-2 flex flex-col rounded-md bg-slate-500 p-1 text-white"
+      >
+        {create ? "login" : "create"}
+      </button>
+    </div>
+  );
+}
+
+function Create() {
+  return <AccountForm api="/api/account" text="create account" />;
+}
+
+function Login() {
+  return <AccountForm api="/api/login" text="login" />;
+}
+
+interface AccountFromProps {
+  api: string;
+  text: string;
+}
+
+function AccountForm({ api, text }: AccountFromProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [sending, setSending] = useState(false);
 
   const handleSubmit = () => {
     setSending(true);
-    fetch("/api/account", {
+    fetch(api, {
       method: "POST",
       body: JSON.stringify({ username, password }),
+      credentials: "same-origin",
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => console.log(data));
+    setSending(false);
   };
 
   return (
-    <section
-      onClick={(e) => e.stopPropagation()}
-      className="rounded-md border-2 border-black bg-blue-300 p-2"
-    >
+    <section className="rounded-md border-2 border-black bg-blue-300 p-2">
       <form onSubmit={handleSubmit} className="grid grid-rows-3 gap-2">
         <input
           disabled={sending}
@@ -42,7 +72,7 @@ export function Account() {
           type="submit"
           className="mx-12 rounded-md border-2"
         >
-          create account
+          {text}
         </button>
       </form>
     </section>
