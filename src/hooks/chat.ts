@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { API_URL } from "../utils/env";
 
 export interface Room {
   id: number;
@@ -17,7 +16,7 @@ export function useGetRoomList(): Room[] {
   const [rooms, setRooms] = useState([] as Room[]);
 
   useEffect(() => {
-    const source = new EventSource(API_URL + "/rooms");
+    const source = new EventSource("/api/rooms");
 
     source.addEventListener("rooms", (event) => {
       const data = JSON.parse(event.data);
@@ -36,7 +35,7 @@ export function useGetMessageList(room: string): Message[] {
   const [messages, setMessages] = useState([] as Message[]);
 
   useEffect(() => {
-    const source = new EventSource(API_URL + "/room/" + room);
+    const source = new EventSource("/api/room/" + room);
 
     source.addEventListener("messages", (event) => {
       const data = JSON.parse(event.data);

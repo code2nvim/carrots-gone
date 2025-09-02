@@ -1,5 +1,4 @@
 import { useGetRoomList } from "../../hooks/chat";
-import { API_URL } from "../../utils/env";
 
 interface RoomListProps {
   select: React.RefObject<(room: string) => void>;
@@ -8,22 +7,20 @@ interface RoomListProps {
 export function RoomList(props: RoomListProps) {
   const rooms = useGetRoomList();
 
-  const api = API_URL + "/rooms";
-
   return (
-    <nav className="flex w-min flex-col items-center justify-evenly bg-gray-800 p-4">
-      <ul className="h-full grow flex-col rounded-md">
+    <nav className="flex w-min flex-col items-center justify-evenly rounded-xl">
+      <ul className="flex h-full flex-col gap-2">
         {rooms.map((room) => (
-          <li key={room.id}>
+          <li key={room.id} className="rounded-md bg-slate-800 px-1 py-2">
             <button onClick={() => props.select.current(room.name)}>
               {room.name}
             </button>
           </li>
         ))}
       </ul>
-      <a href={api} target="_blank" rel="noopener noreferrer">
-        API
-      </a>{" "}
+      <a href="/api/rooms" target="_blank" rel="noopener noreferrer">
+        connect
+      </a>
     </nav>
   );
 }
