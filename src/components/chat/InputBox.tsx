@@ -32,12 +32,14 @@ export function InputBox({ select }: InputBoxProps) {
       .then((res) => res.json())
       .then((data) => console.log(data));
     setSending(false);
+    setContent("");
   };
 
   return (
     <section className="flex gap-2">
       <textarea
         ref={ref}
+        value={content}
         onInput={handleInput}
         onChange={(e) => setContent(e.target.value)}
         className="h-auto grow resize-none rounded-md border border-slate-500 bg-slate-800 p-1"
