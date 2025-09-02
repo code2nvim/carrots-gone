@@ -6,7 +6,7 @@ interface ChatRoomProps {
 }
 
 export function ChatRoom(props: ChatRoomProps) {
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState("default");
 
   const messages = useGetMessageList(room);
 

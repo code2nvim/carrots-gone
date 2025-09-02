@@ -18,9 +18,6 @@ export function RoomList(props: RoomListProps) {
           </li>
         ))}
       </ul>
-      <a href="/api/rooms" target="_blank" rel="noopener noreferrer">
-        connect
-      </a>
     </nav>
   );
 }
