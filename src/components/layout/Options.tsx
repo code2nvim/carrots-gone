@@ -5,10 +5,10 @@ export function Options() {
   const [show, setShow] = useState(true);
 
   return (
-    <div className="pointer-events-none absolute flex size-full items-end justify-start">
+    <div className="pointer-events-none absolute flex size-full items-start justify-end">
       <button
         onClick={() => setShow(true)}
-        className="pointer-events-auto m-2 text-2xl"
+        className="pointer-events-auto m-2 text-xl"
       >
         ⚙️
       </button>

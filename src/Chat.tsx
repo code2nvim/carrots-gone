@@ -10,7 +10,7 @@ export default function Chat() {
   return (
     <main className="flex grow gap-3 bg-slate-900 p-3 text-white">
       <RoomList select={selectRoom} />
-      <div className="flex grow flex-col">
+      <div className="flex grow flex-col gap-2">
         <ChatRoom select={selectRoom} />
         <InputBox />
       </div>

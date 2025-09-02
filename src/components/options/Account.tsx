@@ -7,18 +7,18 @@ export function Account() {
 
   const handleSubmit = () => {
     setSending(true);
-    fetch("/api/login", {
+    fetch("/api/account", {
       method: "POST",
       body: JSON.stringify({ username, password }),
     })
-      .then((res) => res.json())
+      .then((res) => res.text())
       .then((data) => console.log(data));
   };
 
   return (
     <section
       onClick={(e) => e.stopPropagation()}
-      className="rounded-md border-2 border-black bg-slate-300 p-2"
+      className="rounded-md border-2 border-black bg-blue-300 p-2"
     >
       <form onSubmit={handleSubmit} className="grid grid-rows-3 gap-2">
         <input
@@ -27,7 +27,7 @@ export function Account() {
           placeholder="account"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="rounded-md border-2"
+          className="rounded-md border-2 p-1"
         />
         <input
           disabled={sending}
@@ -35,14 +35,14 @@ export function Account() {
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="rounded-md border-2"
+          className="rounded-md border-2 p-1"
         />
         <button
           disabled={sending}
           type="submit"
           className="mx-12 rounded-md border-2"
         >
-          login
+          create account
         </button>
       </form>
     </section>
