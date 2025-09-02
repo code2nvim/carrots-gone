@@ -21,11 +21,11 @@ export function ChatRoom(props: ChatRoomProps) {
       )}
       <ul className="size-full gap-4 rounded-md bg-slate-800 p-4">
         {messages.map((message, idx) => (
-          <li key={message.id} className="gap-2 p-1">
+          <li key={message.id}>
             {(idx == 0 || messages[idx - 1].user != message.user) && (
               <label className="p-1"> {message.user}:</label>
             )}
-            <p className="w-min rounded-md bg-blue-900 p-2">
+            <p className="my-1 w-min rounded-md bg-blue-900 p-2">
               {message.content}
             </p>
           </li>
