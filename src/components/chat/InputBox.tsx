@@ -2,16 +2,13 @@ import { useRef, useState } from "react";
 import { useGetUsername } from "../../hooks/chat";
 
 interface InputBoxProps {
-  select: React.RefObject<(room: string) => void>;
+  room: string;
 }
 
-export function InputBox({ select }: InputBoxProps) {
+export function InputBox({ room }: InputBoxProps) {
   const user = useGetUsername();
-  const [room, setRoom] = useState("default channel");
   const [content, setContent] = useState("");
   const [sending, setSending] = useState(false);
-
-  select.current = (room: string) => setRoom(room);
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const handleInput = () => {
@@ -27,10 +24,11 @@ export function InputBox({ select }: InputBoxProps) {
     fetch("/api/message", {
       method: "POST",
       body: JSON.stringify({ user: user, room: room, content: content }),
-      credentials: "same-origin",
+      credentials: "include",
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((res) => console.log(res.json()))
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
     setSending(false);
     setContent("");
   };

@@ -32,7 +32,7 @@ export function useGetRoomList(): Room[] {
 
     source.addEventListener("rooms", (event) => {
       const data = JSON.parse(event.data);
-      setRooms(data);
+      setRooms(data ? data : []);
     });
 
     return () => {

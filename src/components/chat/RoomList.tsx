@@ -1,10 +1,10 @@
 import { useGetRoomList } from "../../hooks/chat";
 
 interface RoomListProps {
-  select: React.RefObject<(room: string) => void>;
+  select: (room: string) => void;
 }
 
-export function RoomList(props: RoomListProps) {
+export function RoomList({ select }: RoomListProps) {
   const rooms = useGetRoomList();
 
   return (
@@ -15,9 +15,7 @@ export function RoomList(props: RoomListProps) {
             key={room.id}
             className="rounded-md bg-slate-800 px-1 py-2 text-center"
           >
-            <button onClick={() => props.select.current(room.name)}>
-              {room.name}
-            </button>
+            <button onClick={() => select(room.name)}>{room.name}</button>
           </li>
         ))}
       </ul>

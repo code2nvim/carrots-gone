@@ -1,18 +1,13 @@
-import { useState } from "react";
 import { useGetMessageList, useGetUsername } from "../../hooks/chat";
 
 interface ChatRoomProps {
-  select: React.RefObject<(room: string) => void>;
+  room: string;
 }
 
-export function ChatRoom(props: ChatRoomProps) {
-  const [room, setRoom] = useState("default channel");
-
+export function ChatRoom({ room }: ChatRoomProps) {
   const messages = useGetMessageList(room);
 
   const username = useGetUsername();
-
-  props.select.current = (room: string) => setRoom(room);
 
   return (
     <section className="flex grow flex-col items-center gap-2">
