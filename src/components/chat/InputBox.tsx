@@ -24,7 +24,7 @@ export function InputBox({ room }: InputBoxProps) {
     fetch("/api/message", {
       method: "POST",
       body: JSON.stringify({ user: user, room: room, content: content }),
-      credentials: "include",
+      credentials: "same-origin",
     })
       .then((res) => console.log(res.json()))
       .then((data) => console.log(data))
