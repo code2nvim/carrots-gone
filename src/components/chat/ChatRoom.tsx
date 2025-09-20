@@ -1,4 +1,8 @@
-import { useGetMessageList, useGetUsername } from "../../hooks/chat";
+import {
+  useFloatingMessage,
+  useGetMessageList,
+  useGetUsername,
+} from "../../hooks/chat";
 
 interface ChatRoomProps {
   room: string;
@@ -7,7 +11,10 @@ interface ChatRoomProps {
 export function ChatRoom({ room }: ChatRoomProps) {
   const messages = useGetMessageList(room);
 
-  const username = useGetUsername();
+  const { status, data, error } = useGetUsername();
+  const user = data?.username;
+
+  useFloatingMessage(status, error);
 
   return (
     <section className="flex grow flex-col items-center gap-2">
@@ -20,11 +27,11 @@ export function ChatRoom({ room }: ChatRoomProps) {
         {messages.map((message, idx) => (
           <li
             key={message.id}
-            className={`${message.user == username && "flex justify-end"}`}
+            className={`${message.user == user && "flex justify-end"}`}
           >
             {(idx == 0 || messages[idx - 1].user != message.user) && (
               <label className="p-1">
-                {message.user != username && message.user + ": "}
+                {message.user != user && message.user + ": "}
               </label>
             )}
             <p className="my-1 w-min rounded-md bg-blue-900 p-2">

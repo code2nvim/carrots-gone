@@ -1,14 +1,18 @@
 import { useRef, useState } from "react";
-import { useGetUsername } from "../../hooks/chat";
+import { useFloatingMessage, useGetUsername } from "../../hooks/chat";
 
 interface InputBoxProps {
   room: string;
 }
 
 export function InputBox({ room }: InputBoxProps) {
-  const user = useGetUsername();
   const [content, setContent] = useState("");
   const [sending, setSending] = useState(false);
+
+  const { status, data, error } = useGetUsername();
+  const user = data?.username;
+
+  useFloatingMessage(status, error);
 
   const ref = useRef<HTMLTextAreaElement>(null);
   const handleInput = () => {
@@ -23,12 +27,9 @@ export function InputBox({ room }: InputBoxProps) {
     setSending(true);
     fetch("/api/message", {
       method: "POST",
-      body: JSON.stringify({ user: user, room: room, content: content }),
+      body: JSON.stringify({ user, room, content }),
       credentials: "same-origin",
-    })
-      .then((res) => console.log(res.json()))
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+    }).catch((err) => console.error(err));
     setSending(false);
     setContent("");
   };

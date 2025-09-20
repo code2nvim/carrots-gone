@@ -1,4 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useFloatingStore } from "../store/floating";
 
 export interface Room {
   id: number;
@@ -12,16 +14,34 @@ export interface Message {
   content: string;
 }
 
-export function useGetUsername(): string {
-  const [data, setData] = useState({ username: "" });
+export function useGetUsername() {
+  return useQuery<{ username: string }>({
+    queryKey: ["username"],
+    queryFn: async () => {
+      const res = await fetch("/api/username");
+      return res.json();
+    },
+  });
+}
+
+export function useFloatingMessage(status: string, error: Error | null) {
+  const { showMessage, close } = useFloatingStore();
 
   useEffect(() => {
-    fetch("/api/username")
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
+    switch (status) {
+      case "pending":
+        showMessage("Loading: username");
+        break;
 
-  return data.username;
+      case "error":
+        showMessage("Error:" + error?.message);
+        break;
+
+      default:
+        close();
+        break;
+    }
+  }, [status, error, showMessage, close]);
 }
 
 export function useGetRoomList(): Room[] {
