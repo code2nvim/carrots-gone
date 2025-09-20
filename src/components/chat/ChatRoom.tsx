@@ -17,26 +17,28 @@ export function ChatRoom({ room }: ChatRoomProps) {
   useFloatingMessage(status, error);
 
   return (
-    <section className="flex grow flex-col items-center gap-2">
+    <section className="flex flex-col items-center gap-2 overflow-auto">
       {room && (
-        <h1 className="rounded-full bg-blue-950 px-6 py-2 text-center">
+        <h1 className="rounded-full bg-blue-950 px-3 py-2 text-center text-sm">
           {room}
         </h1>
       )}
-      <ul className="size-full gap-4 rounded-md bg-slate-800 p-4">
+      <ul className="size-full gap-4 overflow-auto rounded-md bg-slate-800 p-4">
         {messages.map((message, idx) => (
           <li
             key={message.id}
-            className={`${message.user == user && "flex justify-end"}`}
+            className={`flex ${message.user == user && "justify-end"}`}
           >
-            {(idx == 0 || messages[idx - 1].user != message.user) && (
-              <label className="p-1">
-                {message.user != user && message.user + ": "}
-              </label>
-            )}
-            <p className="my-1 w-min rounded-md bg-blue-900 p-2">
-              {message.content}
-            </p>
+            <div className="flex flex-col">
+              {(idx == 0 || messages[idx - 1].user != message.user) && ( // consecutive messages
+                <label className="p-1">
+                  {message.user != user && message.user + ": "}
+                </label>
+              )}
+              <p className="my-1 flex rounded-md bg-blue-900 p-2">
+                {message.content}
+              </p>
+            </div>
           </li>
         ))}
       </ul>

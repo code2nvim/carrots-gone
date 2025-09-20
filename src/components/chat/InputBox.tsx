@@ -6,7 +6,7 @@ interface InputBoxProps {
 }
 
 export function InputBox({ room }: InputBoxProps) {
-  const [content, setContent] = useState("");
+  const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
 
   const { status, data, error } = useGetUsername();
@@ -19,36 +19,40 @@ export function InputBox({ room }: InputBoxProps) {
     const box = ref.current;
     if (box) {
       box.style.height = "auto";
-      box.style.height = `${box.scrollHeight + 2}px`; // className="p-1"
+      box.style.height = `${box.scrollHeight + 1}px`; // className="p-1"
     }
   };
 
   const handleSend = () => {
-    setSending(true);
-    fetch("/api/message", {
-      method: "POST",
-      body: JSON.stringify({ user, room, content }),
-      credentials: "same-origin",
-    }).catch((err) => console.error(err));
-    setSending(false);
-    setContent("");
+    const content = input.trim();
+
+    if (content) {
+      setSending(true);
+      fetch("/api/message", {
+        method: "POST",
+        body: JSON.stringify({ user, room, content }),
+        credentials: "same-origin",
+      }).catch((err) => console.error(err));
+      setSending(false);
+      setInput("");
+    }
   };
 
   return (
     <section className="flex gap-2">
       <textarea
         ref={ref}
-        value={content}
+        value={input}
         onInput={handleInput}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         className="h-auto grow resize-none rounded-md border border-slate-500 bg-slate-800 p-1"
       />
       <button
         disabled={sending}
         onClick={handleSend}
-        className="aspect-square p-1"
+        className="aspect-square rounded-md border p-1 text-xs"
       >
-        📤
+        send
       </button>
     </section>
   );

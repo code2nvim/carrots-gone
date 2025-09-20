@@ -13,7 +13,7 @@ export function RoomList({ select }: RoomListProps) {
         {rooms.map((room) => (
           <li
             key={room.id}
-            className="rounded-md bg-slate-800 px-1 py-2 text-center"
+            className="rounded-md bg-slate-800 px-1 py-2 text-center text-sm"
           >
             <button onClick={() => select(room.name)}>{room.name}</button>
           </li>

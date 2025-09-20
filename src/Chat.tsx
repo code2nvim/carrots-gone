@@ -9,9 +9,9 @@ export default function Chat() {
   const selectRoom = (room: string) => setRoom(room);
 
   return (
-    <main className="flex grow gap-3 bg-slate-900 p-3 text-white">
+    <main className="absolute flex size-full justify-around gap-3 bg-slate-900 p-3 text-white">
       <RoomList select={selectRoom} />
-      <div className="flex grow flex-col gap-2">
+      <div className="grid size-full grid-rows-[1fr_auto] gap-2">
         <ChatRoom room={room} />
         <InputBox room={room} />
       </div>
