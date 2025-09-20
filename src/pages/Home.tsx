@@ -1,11 +1,22 @@
+import { useEffect } from "react";
 import Chat from "../Chat";
 import { Options } from "../components/layout/Options";
 import { useGetUsername } from "../hooks/chat";
+import { useFloatingStore } from "../store/floating";
 
 export default function Home() {
-  const username = useGetUsername();
+  const { data } = useGetUsername();
+  const user = data?.username;
 
-  return username ? <Chat /> : <Options />;
+  const { close } = useFloatingStore();
+
+  useEffect(() => {
+    if (user) {
+      close();
+    }
+  }, [user, close]);
+
+  return user ? <Chat /> : <Options />;
   /*
   return (
     <main className="grow bg-green-500">
