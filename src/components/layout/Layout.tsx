@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-screen w-full flex-col justify-between">
+    <div className="absolute flex size-full flex-col justify-between">
       <Header />
       {children}
       <Footer />
