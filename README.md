@@ -6,4 +6,4 @@
 npm run dev
 ```
 
-![screenshot](https://i.imgur.com/UrQoWOQ.png)
+![screenshot](https://images2.imgbox.com/c5/6f/PgkDYWdC_o.png)
