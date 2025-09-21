@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useFloatingMessage, useGetUsername } from "../../hooks/chat";
 
 interface InputBoxProps {
@@ -7,7 +7,7 @@ interface InputBoxProps {
 
 export function InputBox({ room }: InputBoxProps) {
   const [input, setInput] = useState("");
-  const [sending, setSending] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const { status, data, error } = useGetUsername();
   const user = data?.username;
@@ -24,18 +24,18 @@ export function InputBox({ room }: InputBoxProps) {
   };
 
   const handleSend = () => {
-    const content = input.trim();
+    startTransition(async () => {
+      const content = input.trim();
 
-    if (content) {
-      setSending(true);
-      fetch("/api/message", {
-        method: "POST",
-        body: JSON.stringify({ user, room, content }),
-        credentials: "same-origin",
-      }).catch((err) => console.error(err));
-      setSending(false);
-      setInput("");
-    }
+      if (content) {
+        fetch("/api/message", {
+          method: "POST",
+          body: JSON.stringify({ user, room, content }),
+          credentials: "same-origin",
+        }).catch((err) => console.error(err));
+        setInput("");
+      }
+    });
   };
 
   return (
@@ -48,7 +48,7 @@ export function InputBox({ room }: InputBoxProps) {
         className="h-auto grow resize-none rounded-md border border-slate-500 bg-slate-800 p-1"
       />
       <button
-        disabled={sending}
+        disabled={isPending}
         onClick={handleSend}
         className="aspect-square rounded-md border p-1 text-xs"
       >

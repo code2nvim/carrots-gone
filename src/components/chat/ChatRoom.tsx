@@ -1,6 +1,6 @@
 import {
   useFloatingMessage,
-  useGetMessageList,
+  useGetMessages,
   useGetUsername,
 } from "../../hooks/chat";
 
@@ -9,7 +9,7 @@ interface ChatRoomProps {
 }
 
 export function ChatRoom({ room }: ChatRoomProps) {
-  const messages = useGetMessageList(room);
+  const messages = useGetMessages(room);
 
   const { status, data, error } = useGetUsername();
   const user = data?.username;

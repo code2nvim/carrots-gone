@@ -1,11 +1,11 @@
-import { useGetRoomList } from "../../hooks/chat";
+import { useGetRooms } from "../../hooks/chat";
 
 interface RoomListProps {
   select: (room: string) => void;
 }
 
 export function RoomList({ select }: RoomListProps) {
-  const rooms = useGetRoomList();
+  const rooms = useGetRooms();
 
   return (
     <nav className="flex w-min flex-col items-center justify-evenly rounded-xl">

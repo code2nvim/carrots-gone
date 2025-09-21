@@ -44,7 +44,7 @@ export function useFloatingMessage(status: string, error: Error | null) {
   }, [status, error, showMessage, close]);
 }
 
-export function useGetRoomList(): Room[] {
+export function useGetRooms(): Room[] {
   const [rooms, setRooms] = useState([] as Room[]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export function useGetRoomList(): Room[] {
   return rooms;
 }
 
-export function useGetMessageList(room: string): Message[] {
+export function useGetMessages(room: string): Message[] {
   const [messages, setMessages] = useState([] as Message[]);
 
   useEffect(() => {
