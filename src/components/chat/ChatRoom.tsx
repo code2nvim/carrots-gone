@@ -1,8 +1,6 @@
-import {
-  useFloatingMessage,
-  useGetMessages,
-  useGetUsername,
-} from "../../hooks/chat";
+import { useGetUsername } from "../../hooks/account";
+import { useGetMessages } from "../../hooks/chat";
+import { useFloatingMessage } from "../../hooks/floating";
 
 interface ChatRoomProps {
   room: string;

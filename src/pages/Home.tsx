@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Chat from "../Chat";
 import { Options } from "../components/layout/Options";
-import { useGetUsername } from "../hooks/chat";
 import { useFloatingStore } from "../store/floating";
+import { useGetUsername } from "../hooks/account";
 
 export default function Home() {
   const { data } = useGetUsername();

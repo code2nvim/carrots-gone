@@ -1,5 +1,6 @@
 import { useRef, useState, useTransition } from "react";
-import { useFloatingMessage, useGetUsername } from "../../hooks/chat";
+import { useGetUsername } from "../../hooks/account";
+import { useFloatingMessage } from "../../hooks/floating";
 
 interface InputBoxProps {
   room: string;
