@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useActionState, useState } from "react";
 
 export function Account() {
   const [create, setCreate] = useState(false);
@@ -33,25 +33,23 @@ interface AccountFromProps {
 function AccountForm({ api, text }: AccountFromProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isPending, startTransition] = useTransition();
+  // const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = () => {
-    startTransition(async () => {
-      if (username && password) {
-        fetch(api, {
-          method: "POST",
-          body: JSON.stringify({ username, password }),
-          credentials: "same-origin",
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((err) => console.error(err));
-      }
-    });
+  const handleSubmit = async () => {
+    if (username && password) {
+      const res = await fetch(api, {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        credentials: "same-origin",
+      });
+      return res.json();
+    }
   };
 
+  const [state, formAction, isPending] = useActionState(handleSubmit, null);
+
   return (
-    <form onSubmit={handleSubmit} className="grid grid-rows-3 gap-2">
+    <form action={formAction} className="grid grid-rows-3 gap-2">
       <input
         disabled={isPending}
         type="text"
@@ -75,6 +73,7 @@ function AccountForm({ api, text }: AccountFromProps) {
       >
         {text}
       </button>
+      {state?.status || ""}
     </form>
   );
 }

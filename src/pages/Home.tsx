@@ -17,11 +17,4 @@ export default function Home() {
   }, [user, close]);
 
   return user ? <Chat /> : <Options />;
-  /*
-  return (
-    <main className="grow bg-green-500">
-      <p>Home</p>
-    </main>
-  );
-   */
 }
