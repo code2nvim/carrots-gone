@@ -15,9 +15,7 @@ export function Select() {
 }
 
 function SelectButton() {
-  const { page, setPage } = useSelectPageStore();
-
-  const toggle = () => setPage(page == "chat" ? "game" : "chat");
+  const { toggle } = useSelectPageStore();
 
   return (
     <button

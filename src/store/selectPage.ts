@@ -5,16 +5,17 @@ type Page = "chat" | "game";
 
 interface SelectPageStore {
   page: Page;
-  setPage: (page: Page) => void;
+  toggle: () => void;
 }
 
 export const useSelectPageStore = create<SelectPageStore>()(
   persist(
     (set) => ({
       page: "chat",
-      setPage: (page) => {
-        set({ page });
-      },
+      toggle: () =>
+        set((state) => ({
+          page: state.page === "chat" ? "game" : "chat",
+        })),
     }),
     { name: "selectPageStore" },
   ),
