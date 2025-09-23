@@ -1,44 +1,37 @@
 import { create } from "zustand";
-import carrot from "/carrot.svg";
-import hole from "/hole.svg";
-import rabbit from "/rabbit.svg";
 
 type Status = "start" | "playing" | "over";
 
-type Target = "carrot" | "hole" | "rabbit";
+export type Target = "carrot" | "hole" | "rabbit";
 
 interface GameStatusStore {
   score: number;
   status: Status;
-  targets: Array<Target>;
+  targets: Array<{ target: Target; timeout: number }>;
+  start: () => void;
   hitTarget: (key: number) => void;
-  toImage: (target: Target) => string;
 }
 
 export const useGameStatusStore = create<GameStatusStore>((set, get) => ({
   score: 0,
   status: "start",
-  targets: Array(9).fill("carrot"),
+  targets: Array(9).fill({ target: "hole", timeout: 0 }),
+  start: () => {
+    set({
+      status: "playing",
+      targets: Array(9).fill({ target: "carrot", timeout: 0 }),
+    });
+  },
   hitTarget: (key) => {
-    if (get().targets[key] === "carrot") {
+    if (get().targets[key].target === "carrot") {
       set((state) => {
         const newTargets = [...state.targets];
-        newTargets[key] = "hole";
+        newTargets[key] = { target: "hole", timeout: 0 };
         return {
           score: state.score + 1,
           targets: newTargets,
         };
       });
-    }
-  },
-  toImage: (target: Target) => {
-    switch (target) {
-      case "carrot":
-        return carrot;
-      case "hole":
-        return hole;
-      case "rabbit":
-        return rabbit;
     }
   },
 }));
