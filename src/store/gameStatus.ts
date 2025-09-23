@@ -11,18 +11,26 @@ interface GameStatusStore {
   score: number;
   status: Status;
   targets: Array<Target>;
-  addScore: () => void;
+  hitTarget: (key: number) => void;
   toImage: (target: Target) => string;
 }
 
-export const useGameStatusStore = create<GameStatusStore>((set) => ({
+export const useGameStatusStore = create<GameStatusStore>((set, get) => ({
   score: 0,
   status: "start",
   targets: Array(9).fill("carrot"),
-  addScore: () =>
-    set((state) => ({
-      score: state.score + 1,
-    })),
+  hitTarget: (key) => {
+    if (get().targets[key] === "carrot") {
+      set((state) => {
+        const newTargets = [...state.targets];
+        newTargets[key] = "hole";
+        return {
+          score: state.score + 1,
+          targets: newTargets,
+        };
+      });
+    }
+  },
   toImage: (target: Target) => {
     switch (target) {
       case "carrot":
