@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-interface GameStore {
+interface GameStatusStore {
   score: number;
   addScore: () => void;
 }
 
-export const useGameStore = create<GameStore>((set) => ({
+export const useGameStatusStore = create<GameStatusStore>((set) => ({
   score: 0,
   addScore: () =>
     set((state) => ({
