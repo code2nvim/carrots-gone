@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { RoomList } from "./components/chat/RoomList";
-import { ChatRoom } from "./components/chat/ChatRoom";
-import { InputBox } from "./components/chat/InputBox";
+import { RoomList } from "../components/chat/RoomList";
+import { ChatRoom } from "../components/chat/ChatRoom";
+import { InputBox } from "../components/chat/InputBox";
 
 export default function Chat() {
   const [room, setRoom] = useState("default channel");

@@ -1,5 +1,5 @@
-import Chat from "../Chat";
-import Game from "../Game";
+import Chat from "./Chat";
+import Game from "./Game";
 import { useSelectPageStore } from "../store/selectPage";
 
 export function Select() {
