@@ -19,15 +19,14 @@ export function GamePlay() {
   const { targets, hitTarget } = useGameStatusStore();
 
   return (
-    <section className="flex flex-wrap items-center justify-center gap-2 p-2">
+    <section className="flex aspect-square max-h-full flex-wrap items-center justify-center p-2">
       {targets.map((target, key) => (
         <button
           key={key}
           onClick={() => hitTarget(key)}
-          className="flex aspect-square basis-1/4 flex-col justify-end border p-2"
+          className="flex aspect-square basis-1/3 flex-col justify-end p-2"
         >
           <img src={toImage(target.target)} />
-          {key}
         </button>
       ))}
     </section>
