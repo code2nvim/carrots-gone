@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useGameStatusStore, type Target } from "../../store/gameStatus";
 import carrot from "/carrot.svg";
 import hole from "/hole.svg";
