@@ -96,10 +96,7 @@ export const useGameStatusStore = create<GameStatusStore>((set, get) => ({
         };
       });
     } else if (get().targets[key].target === "rabbit") {
-      set({
-        status: "over",
-        targets: Array(9).fill({ target: "hole", timeout: 0 }),
-      });
+      get().gameOver();
     }
   },
 }));
