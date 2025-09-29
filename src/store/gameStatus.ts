@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const TIMEOUT = 5;
+const TIMEOUT = 3;
 
 type Status = "start" | "playing" | "over";
 
@@ -24,38 +24,40 @@ export const useGameStatusStore = create<GameStatusStore>((set, get) => ({
     set({
       score: 0,
       status: "playing",
-      targets: Array(9).fill({ target: "carrot", timeout: TIMEOUT }),
+      targets: Array(9).fill({ target: "hole", timeout: 1 }),
     });
 
     const interval = setInterval(() => {
-      set({
-        targets: get().targets.map((target) => {
-          switch (target.target) {
-            case "carrot":
-              return {
-                ...target,
-                timeout: target.timeout - 1,
-              };
-            case "hole":
-              if (target.timeout === 0) {
-                return {
-                  target: Math.random() > 0.5 ? "carrot" : "rabbit",
-                  timeout: TIMEOUT,
-                };
-              } else {
+      if (get().status === "playing") {
+        set({
+          targets: get().targets.map((target) => {
+            switch (target.target) {
+              case "carrot":
                 return {
                   ...target,
                   timeout: target.timeout - 1,
                 };
-              }
-            case "rabbit":
-              return {
-                ...target,
-                timeout: target.timeout - 1,
-              };
-          }
-        }),
-      });
+              case "hole":
+                if (target.timeout === 0) {
+                  return {
+                    target: Math.random() > 0.2 ? "carrot" : "rabbit",
+                    timeout: TIMEOUT,
+                  };
+                } else {
+                  return {
+                    ...target,
+                    timeout: target.timeout - 1,
+                  };
+                }
+              case "rabbit":
+                return {
+                  ...target,
+                  timeout: target.timeout - 1,
+                };
+            }
+          }),
+        });
+      }
 
       get().checkOver();
 
@@ -92,6 +94,11 @@ export const useGameStatusStore = create<GameStatusStore>((set, get) => ({
           score: state.score + 1,
           targets: newTargets,
         };
+      });
+    } else if (get().targets[key].target === "rabbit") {
+      set({
+        status: "over",
+        targets: Array(9).fill({ target: "hole", timeout: 0 }),
       });
     }
   },
